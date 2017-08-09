@@ -39,8 +39,8 @@ public class ShopCarInterpolator implements Interpolator {
         //Log.e("getInterpolation()", "----v * 500----" + (input * 500 + 1000) + "----");
         //return input;
 
-        //Log.e("getInterpolation()", "----v * 500----" + (input * input * 500 + 1000) + "----");
-        //return input * input;
+        Log.e("getInterpolation()", "----v * 500----" + (input * input * 500 + 1000) + "----");
+        return input * input;
 
         //float v1 = 0.2f;
         //float v2 = 0.5f;
@@ -49,10 +49,10 @@ public class ShopCarInterpolator implements Interpolator {
         //
         //return v;
 
-        float v = input * input * (((mTension + 1) * input) - mTension);
-        Log.e("getInterpolation()", "----v * 500----" + (v * 500 + 1000) + "----");
-
-        return v;
+        //float v = input * input * (((mTension + 1) * input) - mTension);
+        //Log.e("getInterpolation()", "----v * 500----" + (v * 500 + 1000) + "----");
+        //
+        //return v;
 
         // if (mFactor == 1.0f) {
         //     float v = input * input;

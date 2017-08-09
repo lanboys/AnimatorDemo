@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
@@ -15,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnticipateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout mRelativeLayout;
     private FrameLayout animation_viewGroup;
     private Drawable mDrawable;
-    private int mAnimationDuration = 500;
+    private int mAnimationDuration = 5000;
     private TextView mTextView;
 
     @Override
@@ -130,14 +130,23 @@ public class MainActivity extends AppCompatActivity {
         ObjectAnimator translationX = ObjectAnimator.ofFloat(imageView, "translationX", 0, endX);
         translationX.setInterpolator(new LinearInterpolator());
 
-        //ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, 100, 0, 100, 0, endY);
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, endY);
-        //translationY.setInterpolator(new ShopCarInterpolator());
-        // translationY.setInterpolator(new CycleInterpolator(12));
-         translationY.setInterpolator(new AnticipateInterpolator());
-        //translationY.setInterpolator(new LinearInterpolator());
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, 100, 0, 100, 0, endY);
+        //ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, endY);
 
-        //translationX.setInterpolator(new DecelerateInterpolator());
+        //translationY.setInterpolator(new AnticipateInterpolator());
+        translationY.setInterpolator(new ShopCarInterpolator());
+        // translationY.setInterpolator(new CycleInterpolator(12));
+        //translationY.setInterpolator(new LinearInterpolator());
+        //translationY.setInterpolator(new DecelerateInterpolator());
+
+        translationY.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float distance = (float) animation.getAnimatedValue();
+                Log.e("onAnimationUpdate()", "----distance----" + (distance + 1000.0f) + "----");
+            }
+        });
+
         //translationX.setRepeatCount(ValueAnimator.INFINITE);
         //translationX.setRepeatMode(ValueAnimator.REVERSE);
         //translationX.setDuration(mAnimationDuration);
@@ -158,26 +167,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         final boolean[] isEnd = {false};
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                while (!isEnd[0]) {
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (imageView != null) {
-                        int[] end_location = new int[2];
-                        imageView.getLocationInWindow(end_location);
-                        // Log.e("run()", "----end_location[0]----" + end_location[0] + "----");
-                        Log.e("run()", "----end_location[1]----" + end_location[1] + "----");
-                    }
-                }
-            }
-        }).start();
+        //new Thread(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //
+        //        while (!isEnd[0]) {
+        //            try {
+        //                Thread.sleep(30);
+        //            } catch (InterruptedException e) {
+        //                e.printStackTrace();
+        //            }
+        //
+        //            if (imageView != null) {
+        //                int[] end_location = new int[2];
+        //                imageView.getLocationInWindow(end_location);
+        //                // Log.e("run()", "----end_location[0]----" + end_location[0] + "----");
+        //                Log.e("run()", "----end_location[1]----" + end_location[1] + "----");
+        //            }
+        //        }
+        //    }
+        //}).start();
 
         mAnimatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -203,4 +212,20 @@ public class MainActivity extends AppCompatActivity {
 
         mAnimatorSet.start();
     }
+
+    //public void startMove() {
+    //    ValueAnimator animator = ValueAnimator.ofFloat(0, pathMeasure.getLength());
+    //    animator.setDuration(3 * 1000);
+    //    animator.setInterpolator(new DecelerateInterpolator());
+    //    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+    //        @Override
+    //        public void onAnimationUpdate(ValueAnimator animation) {
+    //            float distance = (float) animation.getAnimatedValue();
+    //            //tan[0]是邻边 tan[1]是对边
+    //            pathMeasure.getPosTan(distance, pos, tan);
+    //            postInvalidate();
+    //        }
+    //    });
+    //    animator.start();
+    //}
 }
