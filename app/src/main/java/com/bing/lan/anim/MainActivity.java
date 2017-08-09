@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnticipateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout mRelativeLayout;
     private FrameLayout animation_viewGroup;
     private Drawable mDrawable;
-    private int mAnimationDuration = 5000;
+    private int mAnimationDuration = 500;
     private TextView mTextView;
 
     @Override
@@ -129,18 +130,20 @@ public class MainActivity extends AppCompatActivity {
         ObjectAnimator translationX = ObjectAnimator.ofFloat(imageView, "translationX", 0, endX);
         translationX.setInterpolator(new LinearInterpolator());
 
+        //ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, 100, 0, 100, 0, endY);
         ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, endY);
-        translationY.setInterpolator(new ShopCarInterpolator());
+        //translationY.setInterpolator(new ShopCarInterpolator());
         // translationY.setInterpolator(new CycleInterpolator(12));
-        // translationY.setInterpolator(new AnticipateInterpolator());
+         translationY.setInterpolator(new AnticipateInterpolator());
+        //translationY.setInterpolator(new LinearInterpolator());
 
         //translationX.setInterpolator(new DecelerateInterpolator());
         //translationX.setRepeatCount(ValueAnimator.INFINITE);
         //translationX.setRepeatMode(ValueAnimator.REVERSE);
         //translationX.setDuration(mAnimationDuration);
 
-        animators.add(scaleX);
-        animators.add(scaleY);
+        //animators.add(scaleX);
+        //animators.add(scaleY);
         animators.add(translationY);
         animators.add(translationX);
 

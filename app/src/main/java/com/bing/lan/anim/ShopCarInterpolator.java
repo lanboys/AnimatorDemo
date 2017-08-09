@@ -11,7 +11,7 @@ public class ShopCarInterpolator implements Interpolator {
 
     private final float mFactor;
     private final double mDoubleFactor;
-    private final float mTension = 4.0f;
+    private final float mTension = 2.0f;
 
     public ShopCarInterpolator() {
         mFactor = 1.0f;
@@ -32,8 +32,22 @@ public class ShopCarInterpolator implements Interpolator {
     }
 
     public float getInterpolation(float input) {
+
         // Log.e("getInterpolation()", "----input----" + input + "----");
         // Log.e("getInterpolation()", "----input * 500----" + input * 500 + "----");
+
+        //Log.e("getInterpolation()", "----v * 500----" + (input * 500 + 1000) + "----");
+        //return input;
+
+        //Log.e("getInterpolation()", "----v * 500----" + (input * input * 500 + 1000) + "----");
+        //return input * input;
+
+        //float v1 = 0.2f;
+        //float v2 = 0.5f;
+        //float v3 = 5f;
+        //float v = (v3 * input - v1) * (v3 * input - v1) - v2;
+        //
+        //return v;
 
         float v = input * input * (((mTension + 1) * input) - mTension);
         Log.e("getInterpolation()", "----v * 500----" + (v * 500 + 1000) + "----");
@@ -50,6 +64,7 @@ public class ShopCarInterpolator implements Interpolator {
         // }
     }
 
+    //http://blog.csdn.net/harvic880925/article/details/50598322
     //http://blog.csdn.net/gzejia/article/details/51063564
     //https://my.oschina.net/banxi/blog/135633?fromerr=uv67kzf9#OSC_h2_7
     //http://www.wolframalpha.com/input/?i=x%5E(2*3)(0%3Cx%3C%3D1)
