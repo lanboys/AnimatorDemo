@@ -16,7 +16,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -67,11 +72,50 @@ public class MainActivity extends AppCompatActivity {
                 end_location[1] = 1500;
 
                 doAnimator(start_location, end_location, null);
+
+                //showAnimation(view);
+
             }
         });
 
         mDrawable = getResources().getDrawable(R.drawable.adddetail);
         createAnimLayout(this);
+    }
+
+    private void showAnimation(View view) {
+        AnimationSet set = new AnimationSet(true);
+        RotateAnimation rotate = new RotateAnimation(0, 720, RotateAnimation.RELATIVE_TO_SELF,
+                0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        set.addAnimation(rotate);
+        TranslateAnimation translate = new TranslateAnimation(
+                TranslateAnimation.RELATIVE_TO_SELF, -2f
+                , TranslateAnimation.RELATIVE_TO_SELF, 0
+                , TranslateAnimation.RELATIVE_TO_SELF, 0
+                , TranslateAnimation.RELATIVE_TO_SELF, 0);
+        set.addAnimation(translate);
+        AlphaAnimation alpha = new AlphaAnimation(0, 1);
+        set.addAnimation(alpha);
+        set.setDuration(500);
+
+        set.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                Log.e("onAnimation", "onAnimationStart");
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Log.e("onAnimation", "onAnimationEnd");
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        view.startAnimation(set);
     }
 
     public void createAnimLayout(Activity activity) {
