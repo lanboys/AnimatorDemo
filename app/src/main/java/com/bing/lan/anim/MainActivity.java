@@ -20,6 +20,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout mRelativeLayout;
     private FrameLayout animation_viewGroup;
     private Drawable mDrawable;
-    private int mAnimationDuration = 5000;
+    private int mAnimationDuration = 2000;
     private TextView mTextView;
 
     @Override
@@ -106,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 Log.e("onAnimation", "onAnimationEnd");
-
             }
 
             @Override
@@ -166,21 +166,25 @@ public class MainActivity extends AppCompatActivity {
 
         List<Animator> animators = new ArrayList<>();
 
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(imageView, "scaleX", 1.2f, 0.6f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(imageView, "scaleY", 1.2f, 0.6f);
+        //ObjectAnimator scaleX = ObjectAnimator.ofFloat(imageView, "scaleX", 1.2f, 0.6f);
+        //ObjectAnimator scaleY = ObjectAnimator.ofFloat(imageView, "scaleY", 1.2f, 0.6f);
 
         //http://blog.csdn.net/gzejia/article/details/51063564
         //加速器
         ObjectAnimator translationX = ObjectAnimator.ofFloat(imageView, "translationX", 0, endX);
         translationX.setInterpolator(new LinearInterpolator());
 
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, 100, 0, 100, 0, endY);
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, endY);
+        //ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, 100, 0, 100, 0, endY);
         //ObjectAnimator translationY = ObjectAnimator.ofFloat(imageView, "translationY", 0, endY);
 
         //translationY.setInterpolator(new AnticipateInterpolator());
-        translationY.setInterpolator(new ShopCarInterpolator());
+        //translationY.setInterpolator(new ShopCarInterpolator());
         // translationY.setInterpolator(new CycleInterpolator(12));
+        //translationY.setInterpolator(new MyLinearInterpolator());
+        translationY.setInterpolator(new OvershootInterpolator());
         //translationY.setInterpolator(new LinearInterpolator());
+
         //translationY.setInterpolator(new DecelerateInterpolator());
 
         translationY.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

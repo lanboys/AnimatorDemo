@@ -33,7 +33,7 @@ public class ShopCarInterpolator implements Interpolator {
 
     public float getInterpolation(float input) {
 
-        // Log.e("getInterpolation()", "----input----" + input + "----");
+         Log.e("getInterpolation()", "----input----" + input + "----");
         // Log.e("getInterpolation()", "----input * 500----" + input * 500 + "----");
 
         //Log.e("getInterpolation()", "----v * 500----" + (input * 500 + 1000) + "----");
